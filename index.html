@@ -11,6 +11,19 @@
     --ivory:#F8F4ED; --black:#1B1814; --gold:#B8935A; --gold-soft:#D9BD8E;
     --beige:#E7DCC9; --green:#2F3B2D; --line:rgba(27,24,20,0.12); --radius:2px;
   }
+    /* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color:var(--gold);
+}
+
+::-webkit-scrollbar-track{
+    background-color: var(--green);
+}
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{background:var(--ivory); color:var(--black); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
@@ -467,19 +480,6 @@
   .footer-socials a{color:rgba(248,244,237,.55); font-size:11px; letter-spacing:.05em; transition:color .2s ease;}
   .footer-socials a:hover{color:var(--gold-soft);}
 
-  /* SCROLLBAR */
-
-::-webkit-scrollbar{
-    width: 5px;
-}
-
-::-webkit-scrollbar-thumb{
-    background-color:var(--gold);
-}
-
-::-webkit-scrollbar-track{
-    background-color: var(--green);
-}
  
 
   /* stagger reveal for grid-like children */
