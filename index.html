@@ -22,9 +22,15 @@
   button{font-family:'Inter';}
 
   /* ---- nav (compact, same system) ---- */
-  nav{position:sticky; top:0; z-index:80; background:rgba(248,244,237,0.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); width:100%;}
+  /* NOTE: backdrop-filter is applied via nav::before (not directly on nav).
+     Putting backdrop-filter/filter directly on <nav> would make it a
+     "containing block" for any position:fixed descendant (like the mobile
+     .nav-links panel), which breaks its top/right/bottom:0 sizing so it
+     no longer covers the full viewport and lets page content show through. */
+  nav{position:sticky; top:0; z-index:80; background:transparent; border-bottom:1px solid var(--line); width:100%; isolation:isolate;}
+  nav::before{content:''; position:absolute; inset:0; z-index:-1; background:rgba(248,244,237,0.92); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
-    nav{background:var(--ivory);}
+    nav::before{background:var(--ivory);}
   }
   .nav-inner{max-width:1320px; margin:0 auto; padding:18px 48px; display:flex; align-items:center; justify-content:space-between;}
   @media(max-width:768px){.nav-inner{padding:14px 20px;}}
@@ -422,6 +428,24 @@
   .checkout-success .cs-note{max-width:380px; margin:14px auto 26px; line-height:1.6;}
   .checkout-success .btn{display:inline-flex;}
 
+  /* ---- Contact ---- */
+  .contact-wrap{max-width:1320px; margin:0 auto; display:grid; grid-template-columns:.9fr 1.1fr; gap:0; border:1px solid var(--line); border-radius:2px; overflow:hidden;}
+  @media(max-width:860px){.contact-wrap{grid-template-columns:1fr;}}
+  .contact-info{padding:44px 42px; background:var(--beige);}
+  .contact-info h3{font-family:'Fraunces'; font-size:22px; font-weight:400; margin-bottom:10px;}
+  .contact-info>p{font-size:13.5px; color:rgba(27,24,20,.65); line-height:1.7; max-width:400px; margin-bottom:26px;}
+  .contact-row{display:flex; gap:14px; align-items:flex-start; margin-bottom:20px;}
+  .contact-row .cicon2{font-size:17px; color:var(--gold); flex-shrink:0; width:22px; text-align:center;}
+  .contact-row .clabel{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(27,24,20,.5); margin-bottom:3px;}
+  .contact-row .cval{font-size:14px; color:var(--black);}
+  .contact-row .cval a{border-bottom:1px solid transparent; transition:border-color .2s ease;}
+  .contact-row .cval a:hover{border-color:var(--gold);}
+  .contact-hours{margin-top:26px; padding-top:22px; border-top:1px solid var(--line);}
+  .contact-hours .clabel{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(27,24,20,.5); margin-bottom:8px;}
+  .contact-hours-row{display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:rgba(27,24,20,.75);}
+  .contact-map{position:relative; min-height:360px; background:var(--line);}
+  .contact-map iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+
   /* ---- Footer ---- */
   .site-footer{background:var(--black); color:rgba(248,244,237,.75); padding:60px 48px 26px;}
   @media(max-width:768px){.site-footer{padding:44px 20px 22px;}}
@@ -466,6 +490,7 @@
       <a href="#return-gifts" data-nav="return-gifts">Return Gifts</a>
       <a href="#corporate" data-nav="corporate">Corporate</a>
       <a href="#occasions" data-nav="occasions">Occasions</a>
+      <a href="#contact" data-nav="contact">Contact</a>
     </div>
     <div class="nav-icons">
       <button id="btn-search" aria-label="Search">⌕</button>
@@ -490,7 +515,7 @@
       </div>
     </div>
     <div class="hero-visual reveal">
-      <img src="mainpic.jfif" alt="Engraved keepsake gift">
+      <img src="mainpic.jfif">
       <div class="hero-tag"><strong>Live 3D Preview</strong>See exactly what arrives, before you order</div>
     </div>
   </div>
@@ -693,6 +718,57 @@
   </div>
 </section>
 
+<!-- ===================== CONTACT ===================== -->
+<section class="section" id="contact" style="padding-top:0;">
+  <div class="section-head reveal" style="justify-content:center; text-align:center; flex-direction:column;">
+    <span class="label">Get In Touch</span><h2>Visit the studio or reach out.</h2>
+  </div>
+  <div class="contact-wrap reveal">
+    <div class="contact-info">
+      <h3>Maison Lumière — Studio &amp; Showroom</h3>
+      <p>Drop by to see finishes in person, or reach us for order help, customization queries, and bulk / corporate enquiries.</p>
+
+      <div class="contact-row">
+        <span class="cicon2">📍</span>
+        <div>
+          <div class="clabel">Address</div>
+          <div class="cval">Dindigul, Tamil Nadu - 624001</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <span class="cicon2">📞</span>
+        <div>
+          <div class="clabel">Phone / WhatsApp</div>
+          <div class="cval"><a href="tel:+919876543210">+91 98765 43210</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <span class="cicon2">✉️</span>
+        <div>
+          <div class="clabel">Email</div>
+          <div class="cval"><a href="mailto:hello@maisonlumiere.in">hello@maisonlumiere.in</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <span class="cicon2">💼</span>
+        <div>
+          <div class="clabel">Corporate &amp; Bulk Orders</div>
+          <div class="cval"><a href="mailto:corporate@maisonlumiere.in">corporate@maisonlumiere.in</a></div>
+        </div>
+      </div>
+
+      <div class="contact-hours">
+        <div class="clabel">Studio Hours</div>
+        <div class="contact-hours-row"><span>Monday – Saturday</span><span>10:00 AM – 8:00 PM</span></div>
+        <div class="contact-hours-row"><span>Sunday</span><span>11:00 AM – 6:00 PM</span></div>
+      </div>
+    </div>
+    <div class="contact-map">
+      <iframe src="https://maps.google.com/maps?q=Dindigul%20Tamil%20Nadu&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Maison Lumière studio location map"></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== FOOTER ===================== -->
 <footer class="site-footer">
   <div class="footer-top">
@@ -716,8 +792,8 @@
       <h5>Company</h5>
       <a href="#faq-section">FAQs</a>
       <a href="#testimonials">Reviews</a>
-      <a href="#top">Track an Order</a>
-      <a href="#top">Contact Us</a>
+      <a href="#contact" data-nav="contact">Track an Order</a>
+      <a href="#contact" data-nav="contact">Contact Us</a>
     </div>
     <div class="footer-col footer-newsletter">
       <h5>Stay in the loop</h5>
@@ -1607,7 +1683,8 @@ const NAV_TARGETS = {
   'shop': '#shop',
   'return-gifts': '#return-gifts',
   'corporate': '#corporate',
-  'occasions': '#occasions'
+  'occasions': '#occasions',
+  'contact': '#contact'
 };
 navLinksEl.querySelectorAll('a').forEach(a=>{
   a.addEventListener('click', (e)=>{
